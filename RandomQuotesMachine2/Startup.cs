@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RandomQuotesMachine2.Data;
+using RandomQuotesMachine2.Models;
 using RandomQuotesMachine2.Services;
 
 namespace RandomQuotesMachine2
@@ -39,6 +35,9 @@ namespace RandomQuotesMachine2
                     options.Conventions.AuthorizeFolder("/Account/Manage");
                     options.Conventions.AuthorizePage("/Account/Logout");
                 });
+
+            services.AddDbContext<QuotesDbContext>(options => 
+            options.UseSqlServer(Configuration.GetConnectionString("DbQuotesConnection")));
 
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
