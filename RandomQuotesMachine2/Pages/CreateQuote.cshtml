@@ -1,0 +1,19 @@
+﻿@page
+@model RandomQuotesMachine2.Pages.CreateQuoteModel
+@{
+    ViewData["Title"] = "CreateQuote";
+}
+
+<h2>Create New Quote</h2>
+<form method="post">
+    <div>
+        <label>Quote:</label>
+        <textarea name="Quote" rows="4" asp-for="Quotes.Qoute"></textarea>
+    </div>
+    <div>
+        <label>Author:</label>
+        <input type="text" name="Author" size="50" asp-for="Quotes.Author" />
+    </div>
+    <input class="btn btn-primary" type="submit" />
+</form>
+
