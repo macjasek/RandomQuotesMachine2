@@ -1,0 +1,39 @@
+﻿@page
+@model RandomQuotesMachine2.Pages.QuotesListModel
+@{
+    ViewData["Title"] = "QuotesList";
+}
+
+<h2>Quotes List</h2>
+
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Quote</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var quote in Model.Quotes)
+            {
+                <tr>
+                    <td>@quote.Id</td>
+                    <td>@quote.Qoute</td>
+                    <td>@quote.Author</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@quote.Id">edit</a>
+                        <button type="submit" asp-page-handler="delete"
+                                asp-route-id="@quote.Id">
+                            delete
+                        </button>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    <a asp-page="./CreateQuote">Create</a>
+</form>
+

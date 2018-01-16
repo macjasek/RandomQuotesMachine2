@@ -28,7 +28,7 @@ namespace RandomQuotesMachine2.Pages
 
             await _db.SaveChangesAsync();
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("/QuotesList");
         }
     }
 }
