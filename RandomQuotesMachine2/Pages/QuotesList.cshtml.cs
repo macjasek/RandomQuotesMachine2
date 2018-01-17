@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RandomQuotesMachine2.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RandomQuotesMachine2.Pages
 {
@@ -23,6 +21,17 @@ namespace RandomQuotesMachine2.Pages
         public async Task OnGetAsync()
         {
             Quotes = await _db.Quotes.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(long id)
+        {
+            var quote = await _db.Quotes.FindAsync(id);
+            if (quote != null)
+            {
+                _db.Quotes.Remove(quote);
+                await _db.SaveChangesAsync();
+            }
+            return RedirectToPage();
         }
 
     }
