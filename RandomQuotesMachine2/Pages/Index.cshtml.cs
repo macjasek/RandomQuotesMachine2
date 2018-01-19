@@ -26,19 +26,12 @@ namespace RandomQuotesMachine2.Pages
         [BindProperty]
         public IList<Quotes> QuoteList { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(long id)
+        public async Task<IActionResult> OnGetAsync()
         {
             var rndGen = new Random();
             QuoteList = await _db.Quotes.AsNoTracking().ToListAsync();
             int random = rndGen.Next(0, QuoteList.Count);
-            id = QuoteList.ElementAt(random).Id;
-
-            Quote = await _db.Quotes.FindAsync(id);
-            if (Quote == null)
-            {
-                
-                return RedirectToPage($"/{id}");
-            }
+            Quote = QuoteList.ElementAt(random);
 
             return Page();
         }

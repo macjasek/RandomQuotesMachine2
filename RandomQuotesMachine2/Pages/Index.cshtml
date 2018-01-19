@@ -1,12 +1,10 @@
-﻿@page "{id:long}"
+﻿@page 
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div>@Model.Quote.Qoute</div>
-<div>@Model.Quote.Author</div>
-<div><a asp-page="./Index">New Random Quote</a></div>
+<div><a asp-page="./Quote" asp-route-id="@Model.Quote.Id">New Random Quote</a></div>
 
-<div><a asp-page="./CreateQuote">Create</a></div>
+
 
