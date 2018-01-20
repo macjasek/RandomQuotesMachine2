@@ -4,9 +4,16 @@
     ViewData["Title"] = "Quote";
 }
 
-<h2>@Model.Quote.Qoute</h2>
+<div class="wrapper" >
+    <div class="content">
+        <div class="text-center">
+            <h2>@Model.Quote.Qoute</h2>
 
-<p>@Model.Quote.Author</p>
+            <p>@Model.Quote.Author</p>
 
-<div><a asp-page="./Quote" asp-route-id="@Model.RandomQuote.Id">New Random Quote</a></div>
+            <a asp-page="./Quote" asp-route-id="@Model.RandomQuote.Id" class="btn btn-primary top-space">New Random Quote</a>
+        </div>
+
+    </div>
+</div>
 

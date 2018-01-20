@@ -6,16 +6,19 @@
 
 <h2>Create New Quote</h2>
 <form method="post">
-    <div>
-        <label>Quote:</label>
-        
-        <textarea asp-for="Quotes.Qoute" rows="5" cols="50"></textarea>
-    </div>
-    <div>
-        <label>Author:</label>
-        <input asp-for="Quotes.Author" type="text" size="50"  />
-    </div>
-    <input asp-for="Quotes.IsSelected" type="number"  value="0" hidden/>
-    <input class="btn btn-primary" type="submit" />
+    <div class="form-group">
+        <div asp-validation-summary="All"></div>
+        <div>
+            <label>Quote:</label>
+
+            <textarea asp-for="Quotes.Qoute" class="form-control" rows="5" cols="50"></textarea>
+        </div>
+        <div class="top-space">
+            <label>Author:</label>
+            <input asp-for="Quotes.Author" class="form-control" type="text" size="50" />
+        </div>
+        <input asp-for="Quotes.IsSelected" type="number" value="0" hidden />
+        <input class="btn btn-primary top-space" type="submit" />
+    </div> 
 </form>
 
