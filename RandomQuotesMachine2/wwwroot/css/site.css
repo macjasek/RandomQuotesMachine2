@@ -54,6 +54,21 @@ footer {
     margin: 0 20px 10px 20px;
 }
 
+.button-bar {
+    display: flex;
+    justify-content:space-between;
+}
+
+.button-bar-left{
+    
+    width:50%;
+}
+
+.button-bar-right{
+    
+    width:50%;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
