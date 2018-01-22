@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using RandomQuotesMachine2.Data;
 using RandomQuotesMachine2.Models;
 using RandomQuotesMachine2.Services;
@@ -12,12 +13,14 @@ namespace RandomQuotesMachine2
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, ILoggerFactory LoggerFactory)
         {
             Configuration = configuration;
+            loggerFactory = LoggerFactory;
         }
 
         public IConfiguration Configuration { get; }
+        public ILoggerFactory loggerFactory { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -61,6 +64,8 @@ namespace RandomQuotesMachine2
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            SampleData.InitializeData(app.ApplicationServices, loggerFactory, Configuration);
 
             app.UseMvc();
         }
