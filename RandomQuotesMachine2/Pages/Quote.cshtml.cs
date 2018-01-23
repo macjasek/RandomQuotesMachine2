@@ -27,6 +27,7 @@ namespace RandomQuotesMachine2.Pages
 
         public async Task<IActionResult> OnGetAsync(long id)
         {
+
             Quote = await _db.Quotes.FindAsync(id);
             Quote.IsSelected = 1;
             _db.Attach(Quote).State = EntityState.Modified;

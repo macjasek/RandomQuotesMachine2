@@ -4,6 +4,17 @@
     ViewData["Title"] = "Quote";
 }
 
+
+@section AdditionalMeta
+    {
+    
+    <meta property="og:url" content="https://@HttpContext.Request.Host@HttpContext.Request.Path" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="@Model.Quote.Qoute" />
+    <meta property="og:description" content="@Model.Quote.Author" />
+    <meta property="og:image" content="https://@HttpContext.Request.Host/images/@Model.RandomQuote.Id-q.png" />
+}
+
 <div class="wrapper">
     <div class="content">
         <div class="text-center">
@@ -19,14 +30,14 @@
         <div class="text-left button-bar-right">
             <a asp-page="./Quote" asp-route-id="@Model.RandomQuote.Id" class="btn btn-primary">New Random Quote</a>
         </div>
-        
+
         <div class="text-right button-bar-left">
             <a href="#" class="btn btn-default">Twitter</a>
             <a href="#" class="btn btn-default">Facebook</a>
             <a href="#" class="btn btn-default">Pinterest</a>
         </div>
-        
+
     </div>
-    
+
 </div>
 

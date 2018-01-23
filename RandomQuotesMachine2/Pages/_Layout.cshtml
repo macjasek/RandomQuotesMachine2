@@ -6,9 +6,10 @@
 @inject IAuthorizationService AuthorizationService
 <!DOCTYPE html>
 <html>
-<head>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @RenderSection("AdditionalMeta",false)
     <title>@ViewData["Title"] - RandomQuotesMachine2</title>
 
     <environment include="Development">
@@ -31,14 +32,14 @@
             <ul class="nav navbar-nav">
                 <li><a asp-page="/Index" class="navbar-brand">Random Quotes Machine</a></li>
                 @if (SignInManager.IsSignedIn(User))
-                 {
+                {
                     <li><a asp-page="./CreateQuote">Create Quote</a></li>
-                    @if(User.IsInRole("Admin"))
+                    @if (User.IsInRole("Admin"))
                     {
                         <li><a asp-page="./QuotesList">Quotes List</a></li>
                     }
-                    
-                 }
+
+                }
             </ul>
             @await Html.PartialAsync("_LoginPartial")
         </footer>
