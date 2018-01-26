@@ -1,4 +1,5 @@
 ﻿using RandomQuotesMachine2.Models;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace RandomQuotesMachine2.Helpers
@@ -9,8 +10,9 @@ namespace RandomQuotesMachine2.Helpers
         public static void Create(Quotes quote, string fontName, int fontSize, float maximumTextSize)
         {
             Font font = new Font(fontName, fontSize, FontStyle.Regular, GraphicsUnit.Pixel);
+            string[] words = quote.Qoute.Split(' ');
 
-            var textRows = CalculateNumberOfRows(quote.Qoute, font, maximumTextSize);
+            var textRows = CalculateNumberOfRows(words, font, maximumTextSize);
 
             var img = new Bitmap(800, 416);
             var drawing = Graphics.FromImage(img);
@@ -25,23 +27,32 @@ namespace RandomQuotesMachine2.Helpers
             float quoteTextRowHeight = totalQuoteSize.Height * 1.25f;
             float quoteRectangleHeight = quoteTextRowHeight * textRows;
 
+            float imageMiddleHeight = img.Height / 2;
+            float quoteRectangleMiddleHeight = quoteRectangleHeight / 2;
 
+            float quoteRectangleY = imageMiddleHeight + quoteRectangleMiddleHeight;
 
-            for (int i = 0; i < textRows; i++)
-            {
-                //draw text on image
-            }
+            
+
+            var quoteLines = SplitQuoteOnLines(words, font, maximumTextSize);
 
 
             img.Dispose();
             drawing.Dispose();
         }
 
-        private static int CalculateNumberOfRows(string quoteText, Font font, float maximumTextSize)
+        private static List<string> SplitQuoteOnLines(string[] words, Font font, float maximumTextSize)
+        {
+            var quoteLines = new List<string>();
+
+            
+
+            return quoteLines;
+        }
+
+        private static int CalculateNumberOfRows(string[] words, Font font, float maximumTextSize)
         {
             int numberOfRows = 1;
-
-            string[] words = quoteText.Split(' ');
 
             string tempQuote = "";
 
