@@ -1,6 +1,7 @@
 ﻿using RandomQuotesMachine2.Models;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 
 namespace RandomQuotesMachine2.Helpers
 {
@@ -12,7 +13,9 @@ namespace RandomQuotesMachine2.Helpers
             Font font = new Font(fontName, fontSize, FontStyle.Regular, GraphicsUnit.Pixel);
             string[] words = quote.Qoute.Split(' ');
 
-            var textRows = CalculateNumberOfRows(words, font, maximumTextSize);
+            var quoteLines = SplitQuoteOnLines(words, font, maximumTextSize);
+
+            var textRows = quoteLines.Count;
 
             var img = new Bitmap(800, 416);
             var drawing = Graphics.FromImage(img);
@@ -21,6 +24,7 @@ namespace RandomQuotesMachine2.Helpers
             drawing.Clear(backColor);
 
             Color textColor = Color.Black;
+            Brush textBrush = new SolidBrush(textColor);
 
             var totalQuoteSize = CalculateTextSize(quote.Qoute, font);
 
@@ -32,52 +36,46 @@ namespace RandomQuotesMachine2.Helpers
 
             float quoteRectangleY = imageMiddleHeight + quoteRectangleMiddleHeight;
 
-            
+            drawing.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
-            var quoteLines = SplitQuoteOnLines(words, font, maximumTextSize);
+            for (int i = 0; i < textRows; i++)
+            {
+                drawing.DrawString(quoteLines[i], font, textBrush, 20f, quoteRectangleY+(i*quoteTextRowHeight));
+            }
 
+            drawing.Save();
+
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", $"{quote.Id}-q.png");
+            img.Save(path, System.Drawing.Imaging.ImageFormat.Png);
 
             img.Dispose();
             drawing.Dispose();
+            textBrush.Dispose();
         }
 
         private static List<string> SplitQuoteOnLines(string[] words, Font font, float maximumTextSize)
         {
             var quoteLines = new List<string>();
 
-            
-
-            return quoteLines;
-        }
-
-        private static int CalculateNumberOfRows(string[] words, Font font, float maximumTextSize)
-        {
-            int numberOfRows = 1;
-
             string tempQuote = "";
+            var tempQuoteBefore = "";
 
             foreach (string word in words)
             {
-                if (tempQuote == "")
-                {
-                    tempQuote = word;
-                }
-                else
-                {
-                    tempQuote = $"{tempQuote} {word}";
-                }
-
+                tempQuote = tempQuote == "" ? word : $"{tempQuote} {word}";
                 SizeF textSize = CalculateTextSize(tempQuote, font);
 
                 if (textSize.Width >= maximumTextSize)
                 {
-                    numberOfRows++;
+                    quoteLines.Add(tempQuoteBefore);
                     tempQuote = "";
                 }
+                tempQuoteBefore = tempQuote;
             }
 
+            quoteLines.Add(tempQuoteBefore);
 
-            return numberOfRows;
+            return quoteLines;
         }
 
         private static SizeF CalculateTextSize(string text, Font font)

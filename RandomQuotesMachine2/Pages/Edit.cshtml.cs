@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using RandomQuotesMachine2.Helpers;
 using RandomQuotesMachine2.Models;
 using System;
 using System.Threading.Tasks;
@@ -43,6 +44,8 @@ namespace RandomQuotesMachine2.Pages
             try
             {
                 await _db.SaveChangesAsync();
+                QuoteImage.Create(Quotes, "Helvetica", 30, 780f);
+
             }
             catch (DbUpdateConcurrencyException e)
             {
