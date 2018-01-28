@@ -44,7 +44,7 @@ namespace RandomQuotesMachine2.Pages
             try
             {
                 await _db.SaveChangesAsync();
-                QuoteImage.Create(Quotes, "Helvetica", 30, 780f);
+                QuoteImage.Create(Quotes, "Helvetica", 40, 780f);
 
             }
             catch (DbUpdateConcurrencyException e)

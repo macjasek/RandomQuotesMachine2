@@ -10,7 +10,7 @@ namespace RandomQuotesMachine2.Helpers
 
         public static void Create(Quotes quote, string fontName, int fontSize, float maximumTextSize)
         {
-            Font font = new Font(fontName, fontSize, FontStyle.Regular, GraphicsUnit.Pixel);
+            Font font = new Font(fontName, fontSize, FontStyle.Bold, GraphicsUnit.Pixel);
             string[] words = quote.Qoute.Split(' ');
 
             var quoteLines = SplitQuoteOnLines(words, font, maximumTextSize);
@@ -20,10 +20,10 @@ namespace RandomQuotesMachine2.Helpers
             var img = new Bitmap(800, 416);
             var drawing = Graphics.FromImage(img);
             var backColor = new Color();
-            backColor = Color.FromArgb(255, 255, 255);
+            backColor = Color.FromArgb(86, 86, 86);
             drawing.Clear(backColor);
 
-            Color textColor = Color.Black;
+            Color textColor = Color.White;
             Brush textBrush = new SolidBrush(textColor);
 
             var totalQuoteSize = CalculateTextSize(quote.Qoute, font);
@@ -38,10 +38,22 @@ namespace RandomQuotesMachine2.Helpers
 
             drawing.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
+            float x, y;
+            y = 0f;
+
             for (int i = 0; i < textRows; i++)
             {
-                drawing.DrawString(quoteLines[i], font, textBrush, 20f, quoteRectangleY+(i*quoteTextRowHeight));
+                var quoteLinesWidth = CalculateTextSize(quoteLines[i], font).Width;
+                x = (img.Width - quoteLinesWidth)/2;
+                y = imageMiddleHeight - ((totalQuoteSize.Height * textRows * 0.5f) - (i * totalQuoteSize.Height));
+                drawing.DrawString(quoteLines[i], font, textBrush, x, y);
             }
+
+            Font fontAuthor = new Font(fontName, (int)fontSize*0.75f, FontStyle.Italic, GraphicsUnit.Pixel);
+            var authorLineWidth = CalculateTextSize(quote.Author, fontAuthor).Width;
+            x = (img.Width - authorLineWidth) / 2;
+            y = y + totalQuoteSize.Height*2;
+            drawing.DrawString(quote.Author, fontAuthor, textBrush, x, y);
 
             drawing.Save();
 
@@ -68,7 +80,7 @@ namespace RandomQuotesMachine2.Helpers
                 if (textSize.Width >= maximumTextSize)
                 {
                     quoteLines.Add(tempQuoteBefore);
-                    tempQuote = "";
+                    tempQuote = word;
                 }
                 tempQuoteBefore = tempQuote;
             }
