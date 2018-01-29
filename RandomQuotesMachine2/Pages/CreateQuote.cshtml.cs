@@ -30,7 +30,7 @@ namespace RandomQuotesMachine2.Pages
             await _db.SaveChangesAsync();
             QuoteImage.Create(Quotes, "Helvetica", 40, 780f);
 
-            return RedirectToPage("/QuotesList");
+            return RedirectToPage("/Quote",new { id = Quotes.Id});
         }
     }
 }

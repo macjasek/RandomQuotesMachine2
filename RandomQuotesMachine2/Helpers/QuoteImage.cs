@@ -14,10 +14,10 @@ namespace RandomQuotesMachine2.Helpers
             string[] words = quote.Qoute.Split(' ');
 
             var quoteLines = SplitQuoteOnLines(words, font, maximumTextSize);
+            var imgWidth = 800;
+            var imgHeight = 416;
 
-            var textRows = quoteLines.Count;
-
-            var img = new Bitmap(800, 416);
+            var img = new Bitmap(imgWidth, imgHeight);
             var drawing = Graphics.FromImage(img);
             var backColor = new Color();
             backColor = Color.FromArgb(86, 86, 86);
@@ -26,43 +26,46 @@ namespace RandomQuotesMachine2.Helpers
             Color textColor = Color.White;
             Brush textBrush = new SolidBrush(textColor);
 
-            var totalQuoteSize = CalculateTextSize(quote.Qoute, font);
-
-            float quoteTextRowHeight = totalQuoteSize.Height * 1.25f;
-            float quoteRectangleHeight = quoteTextRowHeight * textRows;
-
-            float imageMiddleHeight = img.Height / 2;
-            float quoteRectangleMiddleHeight = quoteRectangleHeight / 2;
-
-            float quoteRectangleY = imageMiddleHeight + quoteRectangleMiddleHeight;
-
             drawing.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
             float x, y;
             y = 0f;
 
-            for (int i = 0; i < textRows; i++)
+            var quoteHeight = CalculateTextSize(quote.Qoute, font).Height;
+
+            for (int i = 0; i < quoteLines.Count; i++)
             {
                 var quoteLinesWidth = CalculateTextSize(quoteLines[i], font).Width;
-                x = (img.Width - quoteLinesWidth)/2;
-                y = imageMiddleHeight - ((totalQuoteSize.Height * textRows * 0.5f) - (i * totalQuoteSize.Height));
+                x = (imgWidth - quoteLinesWidth) / 2;
+                y = (imgHeight / 2) - ((quoteHeight * quoteLines.Count * 0.5f) - (i * quoteHeight));
                 drawing.DrawString(quoteLines[i], font, textBrush, x, y);
             }
 
-            Font fontAuthor = new Font(fontName, (int)fontSize*0.75f, FontStyle.Italic, GraphicsUnit.Pixel);
+            Font fontAuthor = new Font(fontName, (int)fontSize * 0.75f, FontStyle.Italic, GraphicsUnit.Pixel);
             var authorLineWidth = CalculateTextSize(quote.Author, fontAuthor).Width;
             x = (img.Width - authorLineWidth) / 2;
-            y = y + totalQuoteSize.Height*2;
+            y = y + quoteHeight * 2;
             drawing.DrawString(quote.Author, fontAuthor, textBrush, x, y);
 
+            SaveImageToFile(quote, img, drawing);
+            DisposeAssets(font, img, drawing, textBrush, fontAuthor);
+        }
+
+        private static void DisposeAssets(Font font, Bitmap img, Graphics drawing, Brush textBrush, Font fontAuthor)
+        {
+            fontAuthor.Dispose();
+            font.Dispose();
+            img.Dispose();
+            drawing.Dispose();
+            textBrush.Dispose();
+        }
+
+        private static void SaveImageToFile(Quotes quote, Bitmap img, Graphics drawing)
+        {
             drawing.Save();
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", $"{quote.Id}-q.png");
             img.Save(path, System.Drawing.Imaging.ImageFormat.Png);
-
-            img.Dispose();
-            drawing.Dispose();
-            textBrush.Dispose();
         }
 
         private static List<string> SplitQuoteOnLines(string[] words, Font font, float maximumTextSize)
