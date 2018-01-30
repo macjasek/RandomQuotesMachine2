@@ -1,6 +1,7 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #D7CEC7;
 }
 
 /* Wrapping element */
@@ -26,6 +27,19 @@ body {
     margin: 15px;
 }
 
+a {
+    color:#76323F;
+}
+
+.btn-link {
+    color: #76323F;
+}
+
+.btn-primary {
+    background-color: #76323F;
+    border-color:#4f2029;
+}
+
 .wrapper {
     width: 800px;
     height: 800px;
@@ -38,7 +52,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    border: 1px solid black;
+    background-color: rgb(86,86,86);
 }
 
 .top-space {
@@ -52,6 +66,14 @@ footer {
 
 .content h2 {
     margin: 0 20px 10px 20px;
+    color:#fff;
+    font-size: 40px;
+}
+
+.content p {
+    color:#fff;
+    font-size: 30px;
+    font-style: italic;
 }
 
 .button-bar {
@@ -61,12 +83,12 @@ footer {
 
 .button-bar-left{
     
-    width:50%;
+    width:70%;
 }
 
 .button-bar-right{
     
-    width:50%;
+    width:30%;
 }
 
 /* Hide/rearrange for smaller screens */
@@ -78,6 +100,12 @@ footer {
     .wrapper {
         width: 400px;
         height: 400px;
+    }
+    .content h2{
+        font-size: 20px;
+    }
+    .content p{
+        font-size: 15px;
     }
 }
 
